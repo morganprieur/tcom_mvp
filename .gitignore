@@ -1,0 +1,8 @@
+
+.env 
+volumes/ 
+dev/api/uthdemo/static/CSS/bootstrap-dist/ 
+dev/api/uthdemo/utils/FANTOIR0423
+
+traefik/
+

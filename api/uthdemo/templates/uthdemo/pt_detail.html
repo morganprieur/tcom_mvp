@@ -1,0 +1,52 @@
+
+<!-- blog/templates/uthdemo/work_order_detail.html --> 
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- <p>Vous êtes connecté !</p> --> 
+    <h2>Point technique {{ pt.racine }}{{ pt.id }} - détails</h2>
+
+        <h3>{{ pt.label }}</h3> 
+        {% for ot in ots %} 
+        <p>{{ ot.address.number }} {{ ot.address.street_name }}</p> 
+        <p>Lat. : {{ pt.address.lat }}<br> 
+            Long. : {{ pt.address.lng }}<br> 
+            <!-- Coord. GPS : <a href="https://www.google.fr/maps/@43.5951821,3.9216961,17z?entry=ttu">Google Maps</a> --> 
+            <br> 
+            <span class="mb-0 opacity-75"> <!-- Itinéraire : {{ ot.address.lng }} x {{ ot.address.lat }} --> 
+                <a class="no-block" target="_blank" href="https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=43.5951821%2C3.9216961%3B{{ ot.address.lng }}%2C{{ ot.address.lat }}">
+                    Open Street Map
+                </a>
+            </span>
+            <br> 
+        </p> 
+        {% endfor %} 
+        <table class="objects_list">
+            <tr>
+                <th>Objets</th> 
+                <th>Code</th>
+                <th>Accès doc.</th>
+            </tr>
+            {% for ebp in ebps %} 
+            <tr>
+                <td>{{ ebp.logical_type }}</td>
+                <td>{{ ebp.racine }}{{ ebp.id }}</td>
+                <td>
+                    <a href="{% url 'ebp_detail' ebp_id=ebp.id %}"> 
+                        <img src="../../uthdemo/{{ ebp.qrcode }}" alt="Accès doc" height="100px"> 
+                    </a> 
+            </tr> 
+            {% endfor %} 
+        </table>
+        <br> 
+        <!-- Point tech : {{ ot.tech_point.racine }}{{ ot.tech_point.id }}<br>  -->
+        Commentaires : 
+        {% if epb.comment %} 
+            {{ ebp.comment }} 
+        {% else %} 
+            Pas de commentaire. 
+        {% endif %} 
+        <br> 
+        <!-- Nb de docs : {{ docs_count }} -->
+
+{% endblock content %}

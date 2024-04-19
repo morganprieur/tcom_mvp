@@ -1,0 +1,66 @@
+
+<!-- blog/templates/uthdemo/work_order_detail.html --> 
+{% extends 'base.html' %}
+<!-- {% load static %}  -->
+{% block content %} 
+
+    <!-- <p>Vous êtes connecté !</p> --> 
+    <h2>EBP {{ ebp.racine }}{{ ebp.id }} - détails</h2>
+
+    {% if ebp.logical_type == 'BPE' %}
+        <h3>BOITIER DE PROTECTION D'EPISSURE</h3> 
+    {% elif ebp.logical_type == 'PBO' %}
+        <h3>POINT DE BRANCHEMENT OPTIQUE</h3> 
+    {% else %}
+        <h3>{{ ebp.logical_type }}</h3>
+    {% endif %} 
+
+    <p>
+        <br> 
+        {% for ot in ots %} 
+            Point tech : <a href="{% url 'pt_detail' pt_id=ot.tech_point.id %}">{{ ot.tech_point.racine }}{{ ot.tech_point.id }}</a><br> 
+            Travaux : <a href="{% url 'work_order_detail' work_order_id=ot.id %}">{{ ot.racine }}{{ ot.id }}</a><br> 
+        {% empty %} 
+            Pas d'OT à afficher. 
+        {% endfor %} 
+
+        Commentaires : 
+        {% if epb.comment %} 
+            {{ ebp.comment }} 
+        {% else %} 
+            Pas de commentaire. 
+        {% endif %} 
+    </p> 
+
+    <h4>Documents</h4> 
+    
+    <br>
+    <table class="objects_list">
+        {% for doc in documents %} 
+        {% if 'DOCUMENTATION TECHNIQUE' in doc.type %} 
+        <tr>
+            <td> 
+                <span class="bold">{{ doc.name }}</span><br> 
+                Tyoe : {{ doc.type }}<br> 
+                {% if doc.document_url|slice:":7" == 'images/' %} 
+                    <img src="../../uthdemo/{{ doc.document_url }}" alt="{{ doc.name }}" width="400px"> 
+                {% elif doc.document_url|slice:":4" == 'PDF/' %} 
+                    <iframe frameborder="0" 
+                        class="pdf_doc" 
+                        src="{% static doc.document_url %}" 
+                        title="{{ doc.name }}"></iframe> 
+                {% else %} 
+                    <a href="{{ doc.document_url }}" title="{{ doc.name }}" target="_blank">
+                        {{ doc.name }} 
+                    </a> 
+                {% endif %} 
+        </tr> 
+        {% endif %} 
+        <!-- {% empty %} 
+            <tr>Pas de document </tr>  -->
+        {% endfor %} 
+    </table>
+        
+    <br> 
+
+{% endblock content %}

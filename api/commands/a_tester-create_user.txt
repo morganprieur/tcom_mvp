@@ -1,0 +1,8 @@
+# docker exec -it dev-api-1 python manage.py 
+
+# A tester: ouvrir console Python 
+python3 
+from uthdemo.models import User 
+from django.contrib.auth.models import User 
+User.objects.create_user(username='user_tech', password='uthd-23#') 
+

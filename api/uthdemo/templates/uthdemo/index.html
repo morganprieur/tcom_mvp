@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>Organismes</title>
+    </head>
+    <body>
+
+        <p>Les organismes : </p>
+
+        {% if organisms_list %}
+            <ul>
+            {% for organism in organisms_list %}
+                <li>{{ organism.name }} 
+                    <a href="{% url 'uthdemo:detail' organism.uuid %}">
+                        {{ organism.uuid }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No organisms are registered.</p>
+        {% endif %} 
+
+        <form action="{% url 'uthdemo:add_organism' %}" method="post"> 
+
+            {% csrf_token %} 
+            <fieldset>
+                <legend>Ajouter un organisme</legend>
+                
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                
+                <label for="org_name" style="margin-bottom: 10px">Nom</label>
+                <input type="text" name="org_name" id="org_name" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_activity" style="margin-bottom: 10px">Activité</label>
+                <input type="text" name="org_activity" id="org_activity" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_code" style="margin-bottom: 10px">Code</label>
+                <input type="text" name="org_code" id="org_code" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_estab_name" style="margin-bottom: 10px">Nom de l'établissement</label>
+                <input type="text" name="org_estab_name" id="org_estab_name" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_street_name" style="margin-bottom: 10px">Nom de rue</label>
+                <input type="text" name="org_street_name" id="org_street_name" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_number" style="margin-bottom: 10px">Numéro dans la rue</label>
+                <input type="text" name="org_number" id="org_number" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_zip_code" style="margin-bottom: 10px">Code postal</label>
+                <input type="text" name="org_zip_code" id="org_zip_code" value="" style="margin-bottom: 10px"><br>
+                
+                <label for="org_city" style="margin-bottom: 10px">Ville</label>
+                <input type="text" name="org_city" id="org_city" value="" style="margin-bottom: 10px"><br>
+                
+                <input type="hidden" name="csrftoken" value="M8ZvYPETZ5mAgtjVGEO7MIlqmwS94DUT">
+
+                <input type="submit" value="Enregistrer"> 
+ 
+            </fieldset>
+        </form>
+        
+    </body>
+</html>

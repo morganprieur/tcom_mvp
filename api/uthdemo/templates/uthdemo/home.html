@@ -1,0 +1,50 @@
+
+<!-- blog/templates/uthdemo/home.html --> 
+{% extends 'base.html' %}
+{% block content %} 
+
+<!-- <p>You are visiting from: {{ ip }}</p>  -->
+<!-- <p>Your location is: {{ location }}</p>  -->
+
+<div> <!--  class="py-md-5 " flex-column p-4 gap-4 d-flex flex-md-row align-items-center justify-content-center -->
+    <h2 class="text-xs-center center">Ordres de travaux</h2> 
+    <p>Nombre d'OTs : {{ ots_count }}</p>
+
+    {% for ot in ots %} 
+    {% if '023' not in ot.id and '045' not in ot.id %} <!-- if doc.document_url|slice:":7" == 'images/' /  --> 
+    <div class="one_ot">
+        <h3>
+            <a href="{% url 'work_order_detail' work_order_id=ot.id %}" class="list-group-item list-group-item-action gap-3 py-3" aria-current="true">
+                {{ ot.racine }}{{ ot.id }} - {{ ot.label }}  
+            </a> 
+        </p> 
+        <p>{{ ot.address.number }} {{ ot.address.street_name }}<br>  
+            {{ ot.address.zip_code }} {{ ot.address.city }}<br>
+            <br> 
+            <span class="mb-0 opacity-75">Localisation : 
+                <a class="no-block" target="_blank" href="https://www.openstreetmap.org/#map=16/{{ ot.address.lng }}/{{ ot.address.lat }}">
+                    Open Street Map
+                </a>
+            </span> 
+        </p> 
+        <div id="map"></div>
+    </div> 
+    <hr> 
+    {% endif %} 
+    {% endfor %} 
+
+</div>
+
+<!-- {%  if user.is_authenticated %}
+    <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
+{% endif %}  -->
+
+{% endblock content %}
+
+
+
+{% comment %} 
+<!-- {% empty %} 
+    <p>Pas d'ordres de travaux </p>  -->
+<!-- {% endfor %}  --> 
+{% endcomment %} 

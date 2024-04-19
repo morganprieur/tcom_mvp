@@ -1,0 +1,73 @@
+
+<!-- blog/templates/uthdemo/work_order_detail.html --> 
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- <p>Vous êtes connecté !</p> --> 
+    <h2>Ordre de travaux</h2> 
+
+        <h3>{{ ot.label }} - {{ ot.code }}</h3> 
+        <p>{{ ot.address.number }} {{ ot.address.street_name }}</p> 
+        <p>Lat. : {{ ot.address.lat }}<br> 
+            Long. : {{ ot.address.lng }}<br> 
+            <!-- Coord. GPS : <a href="https://www.google.fr/maps/@43.5951821,3.9216961,17z?entry=ttu">Google Maps</a> --> 
+            <br> 
+            <span class="mb-0 opacity-75">Itinéraire : 
+                <a class="no-block" target="_blank" href="https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=43.5951821%2C3.9216961%3B{{ ot.address.lng }}%2C{{ ot.address.lat }}">
+                    Open Street Map
+                </a>
+            </span>
+            <br>
+            <table class="objects_list">
+                <tr>
+                    <td>{{ ot.ebp.logical_type }}</td>
+                    <td>{{ ot.ebp.racine }}{{ ot.ebp.id }}</td>
+                    <td>
+                        <a href="{% url 'ebp_detail' ebp_id=ot.ebp.id %}"> 
+                            <img src="../../uthdemo/{{ ot.ebp.qrcode }}" alt="Accès doc" height="100px"> 
+                        </a>
+                    </td> 
+                </tr> 
+            </table> 
+            Point tech : <a href="{% url 'pt_detail' pt_id=ot.tech_point.id %}">{{ ot.tech_point.racine }}{{ ot.tech_point.id }}</a><br> 
+            Commentaires : 
+            {% if epb.comment %} 
+                {{ ebp.comment }} 
+            {% else %} 
+                Pas de commentaire. 
+            {% endif %}  
+        </p>
+        <br>
+        <!-- Nb de docs : {{ docs_count }}  -->
+        <table class="objects_list">
+            {% for doc in documents %} 
+            {% if doc.type == 'ORDRE DE TRAVAUX' %} 
+            <tr> 
+                <td>
+                    <p> 
+                        {{ doc.name }} <br> 
+                        <iframe frameborder="0" 
+                            class="pdf_doc" 
+                            src="{% static doc.document_url %}" 
+                            title="{{ doc.name }}"></iframe> 
+                    </p>
+            </tr> 
+            {% elif 'COMPTE-RENDU' in doc.type %} 
+            <tr> 
+                <td>
+                    <p> 
+                        {{ doc.name }} <br> 
+                        <iframe frameborder="0" 
+                            class="pdf_doc" 
+                            src="{% static doc.document_url %}" 
+                            title="{{ doc.name }}"></iframe> 
+                    </p>
+            </tr> 
+
+            {% endif %} 
+            {% endfor %} 
+        </table>
+
+        <br> 
+
+{% endblock content %}

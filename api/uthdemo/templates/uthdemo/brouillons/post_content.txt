@@ -1,0 +1,7 @@
+csrfmiddlewaretoken=TIwfCfIjz0wkOzQVWVXP3dxPA0KHgI70vGlAqUc2oVIKUSZGspBMFLI5MmsGabRJ
+&
+org_name=Autre+orga
+&
+org_code=OR99xxxx04
+&
+csrfmiddlewaretoken=M8ZvYPETZ5mAgtjVGEO7MIlqmwS94DUT

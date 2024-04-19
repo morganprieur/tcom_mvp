@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <title>Organisme</title>
+</head>
+<body>
+    {{ context }}
+    {% if organism.name %} 
+    <p>[debug] org_name : {{ organism.name }}</p> 
+        
+        <h3>{{ organism.name }}</h3>
+        
+        <p>
+            <span style="font-weight:bold">Nom de l'établissement : {{ organism.estab_name }} </span><br> 
+            Code : {{ organism.code }} <br> 
+            Activité : {{ organism.activity }} <br> 
+            {{ organism.number }} {{ organism.street_name }}, <br> 
+            <span style="font-weight:bold">{{ organism.zip_code }} {{ organism.city }}</span>, <br> 
+            Créé le {{ organism.created_at }} <br> 
+        </p>
+        
+    {% else %}
+        <p>org_name : no </p>
+    {% endif %}
+    
+
+</body>
+</html>
+
